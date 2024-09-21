@@ -19,9 +19,15 @@ report 50100 "Bank list Report"
             column(ReportHeading; ReportHeading) { }
             column(No_; "No.") { }
             column(Name; Name) { }
-            column(Balance__LCY_; "Balance (LCY)") { }
-
-
+            column(Balance; Balance) { }
+            dataitem("Bank Account Ledger Entry"; "Bank Account Ledger Entry")
+            {
+                DataItemLink = "Bank Account No." = field("No.");
+                column(Document_No_; "Document No.") { }
+                column(Description; Description) { }
+                column(Posting_Date; "Posting Date") { }
+                column(Amount; Amount) { }
+            }
         }
     }
     requestpage
