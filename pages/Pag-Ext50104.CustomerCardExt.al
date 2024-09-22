@@ -25,5 +25,12 @@ pageextension 50102 "Customer List Ext" extends "Customer List"
                 end;
             }
         }
+
     }
+    trigger OnOpenPage()
+    var
+        myInt: Integer;
+    begin
+        Report.Run(Report::"Sales Invoice");
+    end;
 }

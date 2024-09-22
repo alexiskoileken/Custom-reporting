@@ -5,7 +5,18 @@ pageextension 50103 "Accountant RC ext" extends "Accountant Role Center"
 {
     layout
     {
+        modify(ApprovalsActivities)
+        {
+            visible = false;
+        }
+        addbefore(ApprovalsActivities)
+        {
+            part(AccountantPart; "Accountant Rc part")
+            {
+                applicationarea = basic, suite;
 
+            }
+        }
     }
     actions
     {
