@@ -1,7 +1,7 @@
 /// <summary>
 /// Report Bank list Report (ID 50100).
 /// </summary>
-report 50100 "Bank list Report"
+report 50102 "Bank list Report"
 {
     ApplicationArea = All;
     Caption = 'Bank list Report';

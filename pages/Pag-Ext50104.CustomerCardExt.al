@@ -15,6 +15,8 @@ pageextension 50102 "Customer List Ext" extends "Customer List"
             {
                 Caption = 'Customer List Report';
                 image = Report;
+                Promoted = true;
+                PromotedCategory = Report;
                 trigger OnAction()
                 var
                     myInt: Integer;

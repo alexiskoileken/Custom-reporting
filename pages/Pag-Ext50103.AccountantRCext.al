@@ -1,7 +1,7 @@
 /// <summary>
 /// PageExtension Accountant RC ext (ID 50100) extends Record Accountant Role Center.
 /// </summary>
-pageextension 50100 "Accountant RC ext" extends "Accountant Role Center"
+pageextension 50103 "Accountant RC ext" extends "Accountant Role Center"
 {
     layout
     {

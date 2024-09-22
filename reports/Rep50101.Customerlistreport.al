@@ -21,6 +21,7 @@ report 50101 "Customer list report"
             column(Payments__LCY_; "Payments (LCY)") { }
             column(CompanyName; CompInfo.Name) { }
             column(CompanyPicture; CompInfo.Picture) { }
+            column(ReportHeading; ReportHeading) { }
             dataitem("Cust. Ledger Entry"; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No.");
