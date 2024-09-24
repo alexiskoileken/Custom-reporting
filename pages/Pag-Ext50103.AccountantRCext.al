@@ -16,6 +16,7 @@ pageextension 50103 "Accountant RC ext" extends "Accountant Role Center"
                 applicationarea = basic, suite;
 
             }
+
         }
     }
     actions

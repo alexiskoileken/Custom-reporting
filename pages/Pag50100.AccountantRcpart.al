@@ -21,8 +21,31 @@ page 50100 "Accountant Rc part"
                     ApplicationArea = basic, suite;
                     DrillDownPageId = "Concurrent Session List";
                 }
+                field("biggest Sales"; Rec."biggest Sales")
+                {
+                    ApplicationArea = basic, suite;
+                    Caption = 'Biggest Sales Order';
+                    DrillDownPageId = "Sales Lines";
+
+                }
             }
         }
     }
+    trigger OnOpenPage()
+    var
+        myInt: Integer;
+    begin
+        if not Rec.Get() then begin
+            Rec.Init();
+            Rec.Insert();
+        end;
+    end;
+
+    trigger OnAfterGetCurrRecord()
+    var
+        myInt: Integer;
+    begin
+        Rec."biggest Sales" := Rec.GetBiggestSales();
+    end;
 }
 
