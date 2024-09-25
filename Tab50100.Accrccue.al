@@ -41,7 +41,7 @@ table 50100 "Acc rc cue"
         Salesline: Record "Sales Line";
     begin
         salesline.reset();
-        Salesline.SetRange("Document Type");
+        Salesline.SetRange("Document Type", Salesline."Document Type"::Order);
         Salesline.SetFilter("Amount Including VAT", '<>%1', 0);
         Salesline.Ascending(false);
         if Salesline.FindFirst() then begin

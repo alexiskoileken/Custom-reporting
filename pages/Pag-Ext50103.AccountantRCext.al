@@ -9,19 +9,17 @@ pageextension 50103 "Accountant RC ext" extends "Accountant Role Center"
         {
             visible = false;
         }
-        addbefore(ApprovalsActivities)
+        addafter(Control1902304208)
         {
-            part(AccountantPart; "Accountant Rc part")
+            part("Users sales"; "Accountant Rc part")
             {
-                applicationarea = basic, suite;
-
+                ApplicationArea = basic, suite;
             }
-
         }
     }
     actions
     {
-        addbefore("G/L Reports")
+        addbefore("Cash Flow")
         {
             group("BankReport")
             {
@@ -32,6 +30,14 @@ pageextension 50103 "Accountant RC ext" extends "Accountant Role Center"
                     Image = Report;
                     RunObject = report "Bank list Report";
                 }
+                action("G/L Trial Balance")
+                {
+                    Caption = 'G/L Trial Balance';
+                    ApplicationArea = basic, suite;
+                    Image = Report;
+                    RunObject = report "Chart of Acc";
+                }
+
             }
         }
     }
