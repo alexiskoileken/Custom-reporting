@@ -3,7 +3,6 @@
 /// </summary>
 codeunit 50100 "Custom Workflow Management"
 {
-
     /// <summary>
     /// CheckApprovalsWorkflowEnabled.
     /// </summary>
@@ -11,40 +10,29 @@ codeunit 50100 "Custom Workflow Management"
     /// <returns>Return value of type Boolean.</returns>
     procedure CheckApprovalsWorkflowEnabled(var RecRef: RecordRef): Boolean
     begin
-        if not WorkflowMgt.CanExecuteWorkflow(RecRef, GetWorkFlowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef)) then begin
+        if not WorkflowMgt.CanExecuteWorkflow(RecRef, GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef)) then begin
             Error(NoWorkflowEnabledErr);
         end;
         exit(true);
     end;
 
+
+
     /// <summary>
-    /// GetWorkFlowCode.
+    /// GetWorkflowCode.
     /// </summary>
-    /// <param name="WorkFlowCode">Code[128].</param>
+    /// <param name="WorkflowCode">code[128].</param>
     /// <param name="RecRef">RecordRef.</param>
     /// <returns>Return value of type Code[128].</returns>
-    procedure GetWorkFlowCode(WorkFlowCode: Code[128]; RecRef: RecordRef): Code[128]
-
+    procedure GetWorkflowCode(WorkflowCode: code[128]; RecRef: RecordRef): Code[128]
+    var
+        myInt: Integer;
     begin
-        exit(DelChr(StrSubstNo(WorkFlowCode, RecRef.Name), '=', ' '));
+        exit(DelChr(StrSubstNo(WorkflowCode, RecRef.Name), '=', ''))
     end;
 
     /// <summary>
-    /// GetWorkFlowEventDescription.
-    /// </summary>
-    /// <param name="WorkFlowDesc">Text.</param>
-    /// <param name="RecRef">RecordRef.</param>
-    /// <returns>Return value of type Text.</returns>
-    procedure GetWorkFlowEventDescription(WorkFlowDesc: Text; RecRef: RecordRef): Text
-
-    begin
-        exit(StrSubstNo(WorkFlowDesc, RecRef.Name));
-    end;
-
-
-
-    /// <summary>
-    /// OnSendForApproval.
+    /// OnSendVendorForApproval.
     /// </summary>
     /// <param name="RecRef">VAR RecordRef.</param>
     [IntegrationEvent(false, false)]
@@ -61,33 +49,51 @@ codeunit 50100 "Custom Workflow Management"
     begin
     end;
 
-    //add event to the library
-
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Event Handling", 'OnAddWorkflowEventsToLibrary', '', false, false)]
     local procedure OnAddWorkflowEventsToLibrary()
-    Var
+    var
         RecRef: RecordRef;
         WorkflowEventHandling: Codeunit "Workflow Event Handling";
     begin
         RecRef.Open(Database::"Custom Workflow Header");
-        WorkflowEventHandling.AddEventToLibrary(GetWorkFlowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef), DATABASE::"Custom Workflow Header",
-           GetWorkFlowEventDescription(SendForApprovalEventDescTxt, RecRef), 0, false);
-        WorkflowEventHandling.AddEventToLibrary(GetWorkFlowEventDescription(RUNWORKFLOWONCANCELFORAPPROVALCODE, RecRef), DATABASE::"Custom Workflow Header",
-           GetWorkFlowEventDescription(CancelForApprovalEventDescTxt, RecRef), 0, false);
+        WorkflowEventHandling.AddEventToLibrary(GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef), DATABASE::"Custom Workflow Header",
+         GetWorkflowDescriptionText(SendForApprovalEventDescTxt, RecRef), 0, false);
+        WorkflowEventHandling.AddEventToLibrary(GetWorkflowCode(RUNWORKFLOWONCANCELFORAPPROVALCODE, RecRef), DATABASE::"Custom Workflow Header",
+          GetWorkflowDescriptionText(CancelForApprovalEventDescTxt, RecRef), 0, false);
     end;
 
-    //Handle the events
+    /// <summary>
+    /// GetWorkflowDescriptionText.
+    /// </summary>
+    /// <param name="WorkflowDescriptionTxt">Text[250].</param>
+    /// <param name="RecRef">RecordRef.</param>
+    /// <returns>Return value of type Text.</returns>
+    procedure GetWorkflowDescriptionText(WorkflowDescriptionTxt: Text[250]; RecRef: RecordRef): Text
+    var
+        myInt: Integer;
+    begin
+        exit(StrSubstNo(WorkflowDescriptionTxt, RecRef.Name))
+    end;
 
+    /// <summary>
+    /// RunWorkflowOnSendForApproval.
+    /// </summary>
+    /// <param name="RecRef">RecordRef.</param>
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Custom Workflow Management", 'OnSendForApproval', '', false, false)]
-    local procedure RunWorkflowOnSendForApproval(var RecRef: RecordRef)
+    procedure RunWorkflowOnSendForApproval(RecRef: RecordRef)
     begin
-        WorkflowMgt.HandleEvent(GetWorkFlowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef), RecRef);
+        WorkflowMgt.HandleEvent(GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef), RecRef);
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Custom Workflow Management", 'OnCancelForApproval', '', false, false)]
-    local procedure RunWorkflowOnCancelForApproval(var RecRef: RecordRef)
+
+    /// <summary>
+    /// RunWorkflowOnCancelForApproval.
+    /// </summary>
+    /// <param name="Var RecRef">RecordRef.</param>
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Custom Workflow Management", 'OnSendForApproval', '', false, false)]
+    procedure RunWorkflowOnCancelForApproval(Var RecRef: RecordRef)
     begin
-        WorkflowMgt.HandleEvent(GetWorkFlowCode(RUNWORKFLOWONCANCELFORAPPROVALCODE, RecRef), RecRef);
+        WorkflowMgt.HandleEvent(GetWorkflowCode(RUNWORKFLOWONCANCELFORAPPROVALCODE, RecRef), RecRef);
     end;
 
     var

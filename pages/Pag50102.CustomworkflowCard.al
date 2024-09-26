@@ -51,10 +51,9 @@ page 50102 "Custom workflow Card"
                     PromotedCategory = Process;
                     trigger OnAction()
                     var
-                        CustomWorkflowMgt: Codeunit "Custom Workflow Management";
                         RecRef: RecordRef;
+                        CustomWorkflowMgt: Codeunit "Custom Workflow Management";
                     begin
-                        RecRef.GetTable(Rec);
                         if CustomWorkflowMgt.CheckApprovalsWorkflowEnabled(RecRef) then
                             CustomWorkflowMgt.OnSendForApproval(RecRef);
                     end;
