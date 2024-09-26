@@ -51,9 +51,12 @@ page 50102 "Custom workflow Card"
                     PromotedCategory = Process;
                     trigger OnAction()
                     var
-                        myInt: Integer;
+                        CustomWorkflowMgt: Codeunit "Custom Workflow Management";
+                        RecRef: RecordRef;
                     begin
-                        Message('approval message');
+                        RecRef.GetTable(Rec);
+                        if CustomWorkflowMgt.CheckApprovalsWorkflowEnabled(RecRef) then
+                            CustomWorkflowMgt.OnSendForApproval(RecRef);
                     end;
                 }
                 action(CancelApprovalRequest)
@@ -67,9 +70,11 @@ page 50102 "Custom workflow Card"
                     PromotedCategory = Process;
                     trigger OnAction()
                     var
-                        myInt: Integer;
+                        CustomWorkflowMgt: Codeunit "Custom Workflow Management";
+                        RecRef: RecordRef;
                     begin
-                        Message('message');
+                        RecRef.GetTable(Rec);
+                        CustomWorkflowMgt.OnCancelForApproval(RecRef);
                     end;
 
                 }
