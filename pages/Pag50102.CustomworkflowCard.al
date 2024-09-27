@@ -55,7 +55,7 @@ page 50102 "Custom workflow Card"
                         CustomWorkflowMgt: Codeunit "Custom Workflow Management";
                     begin
                         if CustomWorkflowMgt.CheckApprovalsWorkflowEnabled(RecRef) then
-                            CustomWorkflowMgt.OnSendForApproval(RecRef);
+                            CustomWorkflowMgt.OnSendWorkflowForApproval(RecRef);
                     end;
                 }
                 action(CancelApprovalRequest)
@@ -73,7 +73,7 @@ page 50102 "Custom workflow Card"
                         RecRef: RecordRef;
                     begin
                         RecRef.GetTable(Rec);
-                        CustomWorkflowMgt.OnCancelForApproval(RecRef);
+                        CustomWorkflowMgt.OnCancelCustomHeaderForApproval(RecRef);
                     end;
 
                 }

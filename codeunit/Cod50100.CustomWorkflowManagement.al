@@ -36,16 +36,16 @@ codeunit 50100 "Custom Workflow Management"
     /// </summary>
     /// <param name="RecRef">VAR RecordRef.</param>
     [IntegrationEvent(false, false)]
-    procedure OnSendForApproval(var RecRef: RecordRef)
+    procedure OnSendWorkflowForApproval(var RecRef: RecordRef)
     begin
     end;
 
     /// <summary>
-    /// OnCancelForApproval.
+    /// OnCancelCustomHeaderForApproval.
     /// </summary>
     /// <param name="RecRef">VAR RecordRef.</param>
     [IntegrationEvent(false, false)]
-    procedure OnCancelForApproval(var RecRef: RecordRef)
+    procedure OnCancelCustomHeaderForApproval(var RecRef: RecordRef)
     begin
     end;
 
@@ -56,8 +56,8 @@ codeunit 50100 "Custom Workflow Management"
         WorkflowEventHandling: Codeunit "Workflow Event Handling";
     begin
         RecRef.Open(Database::"Custom Workflow Header");
-        WorkflowEventHandling.AddEventToLibrary(GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef), DATABASE::"Custom Workflow Header",
-         GetWorkflowDescriptionText(SendForApprovalEventDescTxt, RecRef), 0, false);
+        WorkflowEventHandling.AddEventToLibrary(GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef), Database::"Custom Workflow Header",
+          GetWorkflowDescriptionText(SendForApprovalEventDescTxt, RecRef), 0, false);
         WorkflowEventHandling.AddEventToLibrary(GetWorkflowCode(RUNWORKFLOWONCANCELFORAPPROVALCODE, RecRef), DATABASE::"Custom Workflow Header",
           GetWorkflowDescriptionText(CancelForApprovalEventDescTxt, RecRef), 0, false);
     end;
@@ -76,22 +76,22 @@ codeunit 50100 "Custom Workflow Management"
     end;
 
     /// <summary>
-    /// RunWorkflowOnSendForApproval.
+    /// RunWorkflowOnSendWorkflowForApproval.
     /// </summary>
     /// <param name="RecRef">RecordRef.</param>
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Custom Workflow Management", 'OnSendForApproval', '', false, false)]
-    procedure RunWorkflowOnSendForApproval(RecRef: RecordRef)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Custom Workflow Management", 'OnSendWorkflowForApproval', '', false, false)]
+    procedure RunWorkflowOnSendWorkflowForApproval(RecRef: RecordRef)
     begin
         WorkflowMgt.HandleEvent(GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef), RecRef);
     end;
 
 
     /// <summary>
-    /// RunWorkflowOnCancelForApproval.
+    /// RunWorkflowOnCancelCustomHeaderForApproval.
     /// </summary>
     /// <param name="Var RecRef">RecordRef.</param>
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Custom Workflow Management", 'OnSendForApproval', '', false, false)]
-    procedure RunWorkflowOnCancelForApproval(Var RecRef: RecordRef)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Custom Workflow Management", 'OnSendWorkflowForApproval', '', false, false)]
+    procedure RunWorkflowOnCancelCustomHeaderForApproval(Var RecRef: RecordRef)
     begin
         WorkflowMgt.HandleEvent(GetWorkflowCode(RUNWORKFLOWONCANCELFORAPPROVALCODE, RecRef), RecRef);
     end;
@@ -127,6 +127,7 @@ codeunit 50100 "Custom Workflow Management"
                     CustomWorkflowHdr.Validate(status, CustomWorkflowHdr.status::"Pending Approval");
                     CustomWorkflowHdr.Modify(true);
                     Variant := CustomWorkflowHdr;
+                    IsHandled := true;
                 end;
         end;
     end;
@@ -153,6 +154,7 @@ codeunit 50100 "Custom Workflow Management"
                     RecRef.SetTable(CustomWorkflowHdr);
                     CustomWorkflowHdr.Validate(status, CustomWorkflowHdr.status::Approved);
                     CustomWorkflowHdr.modify(true);
+                    handled := true;
                 end;
 
         end;
@@ -184,7 +186,7 @@ codeunit 50100 "Custom Workflow Management"
         NoWorkflowEnabledErr:
                 Label 'No approval workflow for this record type is enabled.';
         SendForApprovalEventDescTxt:
-                Label 'Approval of a %1 is requested.';
+                Label 'Approval of a  %1 is requested.';
         CancelForApprovalEventDescTxt:
                 Label 'Approval of a %1 is Canceled.';
 
