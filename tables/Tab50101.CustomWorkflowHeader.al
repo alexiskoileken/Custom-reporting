@@ -5,6 +5,8 @@ table 50101 "Custom Workflow Header"
 {
     Caption = 'Custom Workflow Header';
     DataClassification = ToBeClassified;
+    LookupPageId = "Custom Workflow List";
+    DrillDownPageId = "Custom Workflow List";
 
     fields
     {

@@ -54,6 +54,7 @@ page 50102 "Custom workflow Card"
                         RecRef: RecordRef;
                         CustomWorkflowMgt: Codeunit "Custom Workflow Management";
                     begin
+                        RecRef.GetTable(Rec);
                         if CustomWorkflowMgt.CheckApprovalsWorkflowEnabled(RecRef) then
                             CustomWorkflowMgt.OnSendWorkflowForApproval(RecRef);
                     end;

@@ -10,9 +10,8 @@ codeunit 50100 "Custom Workflow Management"
     /// <returns>Return value of type Boolean.</returns>
     procedure CheckApprovalsWorkflowEnabled(var RecRef: RecordRef): Boolean
     begin
-        if not WorkflowMgt.CanExecuteWorkflow(RecRef, GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef)) then begin
+        if not WorkflowMgt.CanExecuteWorkflow(RecRef, GetWorkflowCode(RUNWORKFLOWONSENDFORAPPROVALCODE, RecRef)) then
             Error(NoWorkflowEnabledErr);
-        end;
         exit(true);
     end;
 
@@ -28,6 +27,7 @@ codeunit 50100 "Custom Workflow Management"
     var
         myInt: Integer;
     begin
+
         exit(DelChr(StrSubstNo(WorkflowCode, RecRef.Name), '=', ''))
     end;
 
