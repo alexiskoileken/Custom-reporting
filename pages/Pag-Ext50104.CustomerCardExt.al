@@ -25,6 +25,17 @@ pageextension 50102 "Customer List Ext" extends "Customer List"
                 end;
             }
         }
+        addbefore(WordTemplate)
+        {
+            action("Anual processing")
+            {
+                caption = 'Annual processing';
+                Image = Payment;
+                RunObject = report "Process Anual transactions";
+                Promoted = true;
+                PromotedCategory = process;
+            }
+        }
 
     }
 
