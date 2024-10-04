@@ -71,6 +71,11 @@ report 50105 "Process Anual transactions"
         UserSetup.Get(UserId);
         userSetup.TestField("Journal Template Name");
         userSetup.TestField("Journal Batch Name");
+
+        GenJnlLn.SetRange("Journal Template Name", UserSetup."Journal Template Name");
+        GenJnlLn.SetRange("Journal Batch Name", UserSetup."Journal Batch Name");
+        if GenJnlLn.FindFirst() then
+            GenJnlLn.DeleteAll();
     end;
 
 
