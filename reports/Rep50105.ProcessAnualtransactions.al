@@ -16,6 +16,23 @@ report 50105 "Process Anual transactions"
             column(No; "No.")
             {
             }
+            trigger OnAfterGetRecord()
+            var
+                myInt: Integer;
+            begin
+                LineNo += 1;
+                GenJnlLn.Init();
+                GenJnlLn."Journal Template Name" := UserSetup."Journal Template Name";
+                GenJnlLn."Journal Batch Name" := UserSetup."Journal Batch Name";
+                GenJnlLn."Line No." := LineNo;
+                GenJnlLn."Posting Date" := Today;
+                GenJnlLn."Document No." := DocumentNo;
+                GenJnlLn."Document Date" := Today;
+                GenJnlLn."Account Type" := GenJnlLn."Account Type"::Customer;
+                GenJnlLn.Validate("Account No.", Customer."No.");
+                GenJnlLn.Description := 'Annual payment ';
+
+            end;
         }
     }
     requestpage
@@ -50,6 +67,11 @@ report 50105 "Process Anual transactions"
                         caption = 'PaymentGLAcc';
                         TableRelation = "G/L Account" where("Direct Posting" = const(true));
                     }
+                    field(DocumentNo; DocumentNo)
+                    {
+                        Caption = 'Document No.';
+                        ApplicationArea = basic, suite;
+                    }
                 }
             }
         }
@@ -68,6 +90,8 @@ report 50105 "Process Anual transactions"
         if FeesIncomeAcc = '' then Error(StrSubstNo(RequiredError, 'Fees Income G/L Acc'));
         if TaxGLacc = '' then Error(StrSubstNo(RequiredError, 'Tax G/L acc'));
         if ExpenseGLAcc = '' then Error(StrSubstNo(RequiredError, 'Expense G/L Acc'));
+        if DocumentNo = '' then Error(StrSubstNo(RequiredError, 'Document No.'));
+
         UserSetup.Get(UserId);
         userSetup.TestField("Journal Template Name");
         userSetup.TestField("Journal Batch Name");
@@ -84,6 +108,7 @@ report 50105 "Process Anual transactions"
         FeesIncomeAcc: code[20];
         TaxGLacc: code[20];
         PaymentGLAcc: code[20];
+        DocumentNo: code[20];
         GenJnlLn: Record "Gen. Journal Line";
         RequiredError: Label 'please enter the %1 field';
         LineNo: integer;
