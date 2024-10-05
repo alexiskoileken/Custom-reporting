@@ -31,6 +31,11 @@ report 50105 "Process Anual transactions"
                 GenJnlLn."Account Type" := GenJnlLn."Account Type"::Customer;
                 GenJnlLn.Validate("Account No.", Customer."No.");
                 GenJnlLn.Description := 'Annual payment ';
+                GenJnlLn."Bal. Account Type" := GenJnlLn."Bal. Account Type"::"G/L Account";
+                GenJnlLn."Bal. Account No." := ExpenseGLAcc;
+                GenJnlLn.Validate(Amount, -5000);
+                GenJnlLn.Insert();
+
 
             end;
         }

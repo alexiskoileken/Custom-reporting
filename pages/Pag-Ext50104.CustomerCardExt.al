@@ -34,6 +34,16 @@ pageextension 50102 "Customer List Ext" extends "Customer List"
                 RunObject = report "Process Anual transactions";
                 Promoted = true;
                 PromotedCategory = process;
+                trigger OnAction()
+                var
+                    Cust: Record Customer;
+                begin
+                    cust.Reset();
+                    Cust.SetRange("No.", Rec."No.");
+                    if Cust.FindFirst() then
+                        Report.Run(Report::"Process Anual transactions", true, false, Cust);
+
+                end;
             }
         }
 
