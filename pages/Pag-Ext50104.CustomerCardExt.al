@@ -31,7 +31,6 @@ pageextension 50102 "Customer List Ext" extends "Customer List"
             {
                 caption = 'Annual processing';
                 Image = Payment;
-                RunObject = report "Process Anual transactions";
                 Promoted = true;
                 PromotedCategory = process;
                 trigger OnAction()
