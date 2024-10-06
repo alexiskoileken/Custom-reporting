@@ -33,7 +33,7 @@ report 50105 "Process Anual transactions"
                 GenJnlLn.Description := 'Annual payment ';
                 GenJnlLn."Bal. Account Type" := GenJnlLn."Bal. Account Type"::"G/L Account";
                 GenJnlLn."Bal. Account No." := ExpenseGLAcc;
-                GenJnlLn.Validate(Amount, -5000);
+                GenJnlLn.Validate(Amount, InputAmount);
                 GenJnlLn.Insert();
 
 
@@ -77,6 +77,16 @@ report 50105 "Process Anual transactions"
                         Caption = 'Document No.';
                         ApplicationArea = basic, suite;
                     }
+                    field(InputAmount; InputAmount)
+                    {
+                        Caption = 'Amount';
+                        ApplicationArea = basic, suite;
+                    }
+                    field(DirectPosting; DirectPosting)
+                    {
+                        Caption = 'Direct Posting';
+                        ApplicationArea = basic, suite;
+                    }
                 }
             }
         }
@@ -107,6 +117,21 @@ report 50105 "Process Anual transactions"
             GenJnlLn.DeleteAll();
     end;
 
+    trigger OnPostReport()
+    var
+
+    begin
+        GenJnlLn.Reset();
+        GenJnlLn.SetRange("Journal Template Name", UserSetup."Journal Template Name");
+        GenJnlLn.SetRange("Journal Batch Name", UserSetup."Journal Batch Name");
+        if GenJnlLn.FindFirst() then begin
+            if not DirectPosting then
+                Page.Run(page::"General Journal", GenJnlLn)
+            else
+                Codeunit.Run(Codeunit::"Gen. Jnl.-Post Batch", GenJnlLn)
+        end
+    end;
+
 
     var
         ExpenseGLAcc: code[20];
@@ -118,5 +143,7 @@ report 50105 "Process Anual transactions"
         RequiredError: Label 'please enter the %1 field';
         LineNo: integer;
         UserSetup: Record "User Setup";
+        InputAmount: Decimal;
+        DirectPosting: Boolean;
 
 }
