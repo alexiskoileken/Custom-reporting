@@ -39,10 +39,12 @@ table 50100 "Acc rc cue"
     procedure GetBiggestSales() BiggestSale: Decimal
     var
         Salesline: Record "Sales Line";
+        SalesValue: Decimal;
     begin
+        SalesValue := 0;
         salesline.reset();
         Salesline.SetRange("Document Type", Salesline."Document Type"::Order);
-        Salesline.SetFilter("Amount Including VAT", '<>%1', 0);
+        Salesline.SetFilter(Amount, '>=%1', SalesValue);
         Salesline.Ascending(false);
         if Salesline.FindFirst() then begin
             BiggestSale := Salesline.Amount;

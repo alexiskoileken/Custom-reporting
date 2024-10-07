@@ -28,7 +28,7 @@ pageextension 50101 "Sales Line Filter" extends "Sales Lines"
     begin
         SalesLn.Reset();
         SalesLn.SetRange("Document Type", SalesLn."Document Type"::Order);
-        SalesLn.SetCurrentKey("Amount Including VAT");
+        SalesLn.SetCurrentKey(Amount);
         SalesLn.Ascending(false);
         if SalesLn.FindSet() then begin
             Page.Run(Page::"Sales Lines", SalesLn);

@@ -25,7 +25,18 @@ page 50100 "Accountant Rc part"
                 {
                     ApplicationArea = basic, suite;
                     Caption = 'Biggest Sales Order';
-                    DrillDownPageId = "Sales Lines";
+                    DrillDown = true;
+                    trigger OnDrillDown()
+                    var
+                        SalesLn: Record "Sales Line";
+                    begin
+                        SalesLn.Reset();
+                        SalesLn.SetRange("Document Type", SalesLn."Document Type"::Order);
+                        SalesLn.SetFilter(Amount, '>=%1', 0);
+                        SalesLn.Ascending(false);
+                        if SalesLn.FindSet() then
+                            Page.Run(Page::"Sales Lines", SalesLn);
+                    end;
 
                 }
             }
