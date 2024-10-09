@@ -45,7 +45,30 @@ pageextension 50102 "Customer List Ext" extends "Customer List"
                 end;
             }
         }
+        addlast(processing)
+        {
+            action(learn)
+            {
+                Caption = 'learn';
+                Image = Payment;
+                Promoted = true;
+                PromotedCategory = process;
+                trigger OnAction()
+                var
+                    customer: Record Customer;
+                begin
+                    customer.Reset();
+                    customer.SetRange("Location Code", 'YELLOW');
+                    if customer.FindSet() then
+                        repeat
+                            Page.Run(Page::"Customer List", customer);
+                        until customer.Next() = 0
+                end;
+            }
+        }
 
     }
+    var
+        v: Record "Source Code";
 
 }
