@@ -17,7 +17,6 @@ codeunit 50102 "Mini Customer "
                 MiniCust."Customer Name" := cust.Name;
                 MiniCust.phoneNumber := Cust."Phone No.";
                 MiniCust.city := Cust.city;
-                Cust.Validate(balance, MiniCust.balance);
                 MiniCust.CalcSums(balance);
                 MiniCust.balance := Cust.Balance;
                 MiniCust.insert;
