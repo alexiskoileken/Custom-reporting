@@ -5,6 +5,14 @@ pageextension 50105 "Customer Card Ext" extends "Customer Card"
 {
     layout
     {
+        addlast(General)
+        {
+            field(Segment; Rec.Segment)
+            {
+                ApplicationArea = basic, suite;
+                ToolTip = 'Specifies the segment state  on customers';
+            }
+        }
     }
     actions
     {
@@ -23,6 +31,7 @@ pageextension 50105 "Customer Card Ext" extends "Customer Card"
                 end;
             }
         }
+
     }
     local procedure CallUpdateCreditLimit()
     var
@@ -47,5 +56,14 @@ pageextension 50105 "Customer Card Ext" extends "Customer Card"
     var
         AreYouSureQst: label 'Are you sure that you want to set the %1 to %2?';
         CreditLimitRoundedTxt: label 'The credit limit was rounded to %1 to comply with company policies.';
+
         CreditLimitUpToDateTxt: label 'The credit limit is up to date.';
+        
+
+    trigger OnOpenPage()
+    var
+        Segmentation: Codeunit Segmentation;
+    begin
+        Segmentation.Run();
+    end;
 }

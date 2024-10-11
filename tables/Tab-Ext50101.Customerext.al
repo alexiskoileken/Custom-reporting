@@ -5,7 +5,11 @@ tableextension 50101 "Customer ext" extends Customer
 {
     fields
     {
-
+        field(50101; Segment; Enum Segmentation)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
     /// <summary>
     /// UpdateCreditLimit.
