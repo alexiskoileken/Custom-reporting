@@ -77,6 +77,7 @@ page 50103 "Mini Customer list"
                     begin
                         MiniCust.DeleteAll();
                         Message('Deleted Succesfully');
+                        CurrPage.close;
                     end;
                 }
             }
