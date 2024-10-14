@@ -5,7 +5,7 @@ pageextension 50102 "Customer List Ext" extends "Customer List"
 {
     layout
     {
-
+        movebefore(Name; "Location Code")
     }
     actions
     {

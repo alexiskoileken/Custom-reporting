@@ -28,6 +28,7 @@ page 50102 "Custom workflow Card"
                 field(status; Rec.status)
                 {
                     ToolTip = 'Specifies the value of the status field.', Comment = '%';
+                    StyleExpr = Stylish;
                 }
             }
         }
@@ -168,10 +169,14 @@ page 50102 "Custom workflow Card"
         OpenApprovalEntriesExist := ApprovalsMgmt.HasOpenApprovalEntries(Rec.RecordId);
         CanCancelApprovalForRecord := ApprovalsMgmt.CanCancelApprovalForRecord(Rec.RecordId);
         HasApprovalEntries := ApprovalsMgmt.HasApprovalEntries(Rec.RecordId);
+        Stylish := CustomWorkflowMgt.changeColor(Rec);
+
     end;
 
     var
         OpenApprovalEntriesExistCurrUser, OpenApprovalEntriesExist, CanCancelApprovalForRecord
         , HasApprovalEntries : Boolean;
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+        Stylish: text[30];
+        CustomWorkflowMgt: Codeunit "Custom Workflow Management";
 }

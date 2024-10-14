@@ -28,8 +28,19 @@ page 50101 "Custom Workflow List"
                 field(status; Rec.status)
                 {
                     ToolTip = 'Specifies the value of the status field.', Comment = '%';
+                    StyleExpr = Stylish;
                 }
             }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+    begin
+        Stylish := CustomWorkflowMgt.changeColor(Rec);
+    end;
+
+
+    var
+        Stylish: text[30];
+        CustomWorkflowMgt: Codeunit "Custom Workflow Management";
 }

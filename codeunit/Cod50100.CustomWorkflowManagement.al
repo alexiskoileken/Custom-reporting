@@ -176,6 +176,29 @@ codeunit 50100 "Custom Workflow Management"
 
     end;
 
+    /// <summary>
+    /// changeColor.
+    /// </summary>
+    /// <param name="CustomWorkflowHeader">Record "Custom Workflow Header".</param>
+    /// <returns>Return value of type Text.</returns>
+    procedure changeColor(CustomWorkflowHeader: Record "Custom Workflow Header"): Text
+    var
+        myInt: Integer;
+    begin
+        with CustomWorkflowHeader do
+            case status of
+                status::Open:
+                    exit('Favorable');
+                status::"Pending Approval":
+                    exit('Subordinate');
+                status::Approved:
+                    exit('Strong');
+                status::Rejected:
+                    exit('Unfavorable');
+            end;
+
+    end;
+
     var
         WorkflowMgt:
             Codeunit "Workflow Management";

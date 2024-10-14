@@ -9,6 +9,7 @@ page 50104 "Customers Overview List"
     SourceTable = "Customer Overview";
     UsageCategory = Lists;
     Editable = false;
+    PromotedActionCategories = 'New,Process,Report,Approve,New Document,Request Approval,Cusomer,Navigate';
 
     layout
     {
@@ -47,11 +48,22 @@ page 50104 "Customers Overview List"
     {
         area(Processing)
         {
+            action(Order)
+            {
+                Caption = 'Cust-sales';
+                ToolTip = 'Import Records';
+                Image = SalesPerson;
+                Promoted = true;
+                PromotedCategory = Category7;
+                RunObject=page "Sales Orders";
+            }
             action(Import)
             {
                 Caption = 'Import Records';
                 ToolTip = 'Import Records';
                 Image = Import;
+                Promoted = true;
+                PromotedCategory = Process;
                 trigger OnAction()
                 var
                     CustOverviewMgt: Codeunit "Customer Overview Mgt";
@@ -59,9 +71,76 @@ page 50104 "Customers Overview List"
                     CustOverviewMgt.Run();
                 end;
             }
+            group(Approvals)
+            {
+                action(control01)
+                {
+                    Caption = 'Send Approval Request';
+                    Image = SendApprovalRequest;
+                    Promoted = true;
+                    PromotedCategory = Category6;
+                    ApplicationArea = all;
+                    trigger OnAction()
+                    var
+                        myInt: Integer;
+                    begin
+                        Message('Approval request has been send');
+                    end;
+                }
+                action(control02)
+                {
+                    Caption = 'Cancel Approval Request';
+                    Image = CancelApprovalRequest;
+                    Promoted = true;
+                    Enabled = false;
+                    PromotedCategory = Category6;
+                    ApplicationArea = all;
+                    trigger OnAction()
+                    var
+                        myInt: Integer;
+                    begin
+                        Message('Cancel request ');
+                    end;
+                }
+            }
+        }
+        area(Creation)
+        {
+            group(Douments)
+            {
+                Caption = 'Document';
+                action(SalesQuote)
+                {
+                    Caption = 'Sales Quote';
+                    Image = NewSalesQuote;
+                    Promoted = true;
+                    PromotedCategory = Category5;
+                    ApplicationArea = all;
+                    RunObject = page "Sales Quote";
+                }
+                action(SalesInvoice)
+                {
+                    Caption = 'Sales Invoice';
+                    Image = NewSalesInvoice;
+                    Promoted = true;
+                    PromotedCategory = Category5;
+                    ApplicationArea = all;
+                    RunObject = page "Sales Invoice";
+                }
+                action(SalesOrder)
+                {
+                    Caption = 'Sales Order';
+                    Image = NewSalesQuote;
+                    Promoted = true;
+                    PromotedCategory = Category5;
+                    ApplicationArea = all;
+                    RunObject = page "Sales Order";
+                }
+            }
         }
     }
+    var 
+    customer: Record  customer;
 }
 
 
- 

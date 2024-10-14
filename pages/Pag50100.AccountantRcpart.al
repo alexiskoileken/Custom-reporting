@@ -8,6 +8,7 @@ page 50100 "Accountant Rc part"
     PageType = CardPart;
     SourceTable = "Acc rc cue";
     RefreshOnActivate = true;
+    
 
     layout
     {
