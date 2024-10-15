@@ -32,5 +32,23 @@ codeunit 50103 Segmentation
                 Customer.Modify(true);
             until Customer.Next() = 0;
     end;
+
+    /// <summary>
+    /// ChangeColor.
+    /// </summary>
+    /// <param name="wood">Record wood.</param>
+    /// <returns>Return value of type text.</returns>
+    procedure ChangeColor(wood: Record wood): text
+    var
+        myInt: Integer;
+    begin
+        case wood.status of
+            wood.status::married:
+                exit('Unfavorable');
+            wood.status::single:
+                exit('Favorable');
+        end;
+    end;
+
 }
 
