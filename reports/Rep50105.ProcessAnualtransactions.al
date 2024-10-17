@@ -42,6 +42,7 @@ report 50105 "Process Anual transactions"
     }
     requestpage
     {
+        SaveValues = true;
         layout
         {
             area(Content)
@@ -86,6 +87,7 @@ report 50105 "Process Anual transactions"
                     {
                         Caption = 'Direct Posting';
                         ApplicationArea = basic, suite;
+
                     }
                 }
             }

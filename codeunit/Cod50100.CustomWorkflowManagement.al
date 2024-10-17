@@ -185,15 +185,14 @@ codeunit 50100 "Custom Workflow Management"
     var
         myInt: Integer;
     begin
-        with CustomWorkflowHeader do
-            case status of
-                status::Open:
+         case CustomWorkflowHeader.status of
+                CustomWorkflowHeader.status::Open:
                     exit('Favorable');
-                status::"Pending Approval":
+                CustomWorkflowHeader.status::"Pending Approval":
                     exit('Subordinate');
-                status::Approved:
+                CustomWorkflowHeader.status::Approved:
                     exit('Strong');
-                status::Rejected:
+                CustomWorkflowHeader.status::Rejected:
                     exit('Unfavorable');
             end;
 
