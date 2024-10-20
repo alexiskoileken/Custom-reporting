@@ -6,6 +6,7 @@ report 50107 ReplaceName2
     ApplicationArea = All;
     Caption = 'ReplaceName2';
     UsageCategory = ReportsAndAnalysis;
+    ProcessingOnly = true;
     dataset
     {
         dataitem(Customer; Customer)

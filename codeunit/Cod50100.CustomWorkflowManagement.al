@@ -185,16 +185,16 @@ codeunit 50100 "Custom Workflow Management"
     var
         myInt: Integer;
     begin
-         case CustomWorkflowHeader.status of
-                CustomWorkflowHeader.status::Open:
-                    exit('Favorable');
-                CustomWorkflowHeader.status::"Pending Approval":
-                    exit('Subordinate');
-                CustomWorkflowHeader.status::Approved:
-                    exit('Strong');
-                CustomWorkflowHeader.status::Rejected:
-                    exit('Unfavorable');
-            end;
+        case CustomWorkflowHeader.status of
+            CustomWorkflowHeader.status::Open:
+                exit('Favorable');
+            CustomWorkflowHeader.status::"Pending Approval":
+                exit('Subordinate');
+            CustomWorkflowHeader.status::Approved:
+                exit('Strong');
+            CustomWorkflowHeader.status::Rejected:
+                exit('Unfavorable');
+        end;
 
     end;
 
@@ -213,5 +213,6 @@ codeunit 50100 "Custom Workflow Management"
                 Label 'Approval of a %1 is Canceled.';
 
         CustomWorkflowHdr: Record "Custom Workflow Header";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
 
 }

@@ -24,6 +24,21 @@ codeunit 50102 "Mini Customer "
 
     end;
 
+    /// <summary>
+    /// GenericVariantLearn.
+    /// </summary>
+    /// <param name="variant">Variant.</param>
+    // procedure GenericVariantLearn(variant: Variant)
+    // var
+    //     RecRef: RecordRef;
+    //     FldRef: FieldRef;
+    // begin
+    //     if variant.IsRecord then begin
+    //         RecRef.GetTable(variant);
+    //         FldRef:=FldRef.
+    //     end
+    // end;
+
     var
         Cust: Record customer;
         CountryRegion: Record "Country/Region";

@@ -1,22 +1,22 @@
-page 50105 woods
+page 50106 wood
 {
     ApplicationArea = All;
     Caption = 'wood';
-    PageType = List;
+    PageType = Card;
     SourceTable = wood;
-    UsageCategory = Lists;
-    CardPageId = wood;
 
     layout
     {
         area(Content)
         {
-            repeater(General)
+            group(General)
             {
+                Caption = 'General';
                 field("primary key"; Rec."primary key")
                 {
-                    ToolTip = 'Specifies the value of the primary key field.', Comment = '%';
+
                 }
+
                 field(name; Rec.name)
                 {
                     ToolTip = 'Specifies the value of the name field.', Comment = '%';
@@ -24,21 +24,26 @@ page 50105 woods
                 field(status; Rec.status)
                 {
                     ToolTip = 'Specifies the value of the status field.', Comment = '%';
-                    StyleExpr = stylish;
-
                 }
-                
+                field(picture; Rec.picture)
+                {
+                    ToolTip = 'Specifies the value of the picture field.', Comment = '%';
+                    ApplicationArea = all;
+                }
+                field(Picture2; Rec.Picture2)
+                {
+                    ApplicationArea = all;
+                }
 
             }
         }
+        area(FactBoxes)
+        {
+            part(wood; Woodpart)
+            {
+                ApplicationArea = all;
+            }
+        }
     }
-    trigger OnAfterGetCurrRecord()
-    var
-        Segmentation: Codeunit Segmentation;
-    begin
-        stylish := Segmentation.ChangeColor(Rec);
-    end;
 
-    var
-        stylish: text;
 }
