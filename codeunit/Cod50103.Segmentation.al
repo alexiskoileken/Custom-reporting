@@ -50,5 +50,19 @@ codeunit 50103 Segmentation
         end;
     end;
 
+    procedure TestingBlob()
+    var
+        CompInfo: Record "Company Information";
+        InStr:InStream;
+    begin
+        if CompInfo.FindFirst() then begin
+            CompInfo.CalcFields(CompInfo.Picture);
+CompInfo.Picture.CreateInStream(InStr);
+        end;
+
+    end;
+    var
+    vsh: Codeunit "Temp Blob";
+
 }
 

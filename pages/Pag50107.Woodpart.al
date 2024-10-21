@@ -36,10 +36,10 @@ page 50107 Woodpart
                     InstreamPic: InStream;
                     wood: Record wood;
                 begin
-                        if UploadIntoStream('Import', '', 'All files(*.*)|*.*', FromFileName, InstreamPic) then begin
-                            Rec.picture.ImportStream(InstreamPic, FromFileName);
-                            Rec.Modify(true)
-                        end;
+                    if UploadIntoStream('Import', '', 'All files(*.*)|*.*', FromFileName, InstreamPic) then begin
+                        Rec.picture.ImportStream(InstreamPic, FromFileName);
+                        Rec.Modify(true)
+                    end;
                 end;
             }
             action(Export)
@@ -49,11 +49,14 @@ page 50107 Woodpart
                 ApplicationArea = all;
 
                 trigger OnAction()
+                var
+                    Tofile: text;
+                    Instream: InStream;
                 begin
-
+                    DownloadFromStream(Instream, 'Export File', '', 'All files(*.*)|*.*', Tofile)
                 end;
             }
-           
+
         }
 
     }
